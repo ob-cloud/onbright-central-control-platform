@@ -61,6 +61,14 @@ module.exports = {
           '/pro': ''  //默认所有请求都加了/pro前缀，需要去掉
         }
       },
+      '/accp': {
+        target: 'https://aliiot.on-bright.com/mock/37/accp', //mock API接口系统
+        ws: false,
+        changeOrigin: true,
+        pathRewrite: {
+          '/accp': ''  //默认所有请求都加了/pro前缀，需要去掉
+        }
+      },
       '/nurse': {
         target: 'http://192.168.200.241/nurse',
         // target: 'https://aliiot.on-bright.com/nurse',
