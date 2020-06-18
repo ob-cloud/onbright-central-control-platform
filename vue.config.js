@@ -4,11 +4,11 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const isProEnv = process.env.NODE_ENV === 'production'
+const isDeployState = ['production', 'development', 'test'].includes(process.env.NODE_ENV)
 
 // vue.config.js
 module.exports = {
-  publicPath: isProEnv ? './' : '/',
+  publicPath: isDeployState ? './' : '/',
   /*
     Vue-cli3:
     Crashed when using Webpack `import()` #2463
@@ -54,15 +54,20 @@ module.exports = {
     port: 3001,
     proxy: {
      '/pro': {
-        // target: 'http://yapi.demo.qunar.com/mock/66959', //mock API接口系统
-        // target: 'https://aliiot.on-bright.com/mock/13/pro',
-        target: 'http://192.168.200.241',
-        // target: 'http://10.10.92.161:8082/nurse',
-        // target: 'https://aliiot.on-bright.com/',
+        target: 'https://aliiot.on-bright.com/mock/13/pro', //mock API接口系统
         ws: false,
         changeOrigin: true,
         pathRewrite: {
           '/pro': ''  //默认所有请求都加了/pro前缀，需要去掉
+        }
+      },
+      '/nurse': {
+        target: 'http://192.168.200.241/nurse',
+        // target: 'https://aliiot.on-bright.com/nurse',
+        ws: false,
+        changeOrigin: true,
+        pathRewrite: {
+          '/nurse': ''  //默认所有请求都加了/pro前缀，需要去掉
         }
       },
     }

@@ -27,7 +27,7 @@ export default {
   production: process.env.NODE_ENV === 'production' && process.env.VUE_APP_PREVIEW !== 'true',
   // vue-ls options
   storageOptions: {
-    namespace: 'PRO__', // key prefix
+    namespace: 'accp__', // key prefix
     name: 'ls', // name variable Vue.[ls] or this.[$ls],
     storage: 'local' // storage name session, local, memory
   },
@@ -35,7 +35,7 @@ export default {
   // TODO Delete
   pageOptions: {
     logo: 'http://placehold.it/50x50/333/fff/?text=pro',
-    title: 'Admin-Pro',
+    title: '昂宝中控平台',
     // description: 'On-Bright Admin Pro',
     hasFooter: false, // hasFooter 为 true 时， 下面脚注配置生效
     copyright: 'OnBright.tld',
@@ -63,7 +63,7 @@ export default {
   // TODO Delete 登录页面配置 - 迁移至脚手架
   LoginLayout: {
     mode: 'simple', // mode: simple, multiple
-    forgetPassword: true, // password forgotten
+    forgetPassword: false, // password forgotten
     // otherLoginTypes: [{ // third-part login
     //   iconCls: 'alipay-circle'
     // }, {
