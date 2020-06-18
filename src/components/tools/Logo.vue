@@ -12,7 +12,7 @@
 <script>
 // import LogoSvg from '@/assets/logo.svg?inline'
 import Logo from '@/assets/logo.png'
-
+import config from '@/config/defaultSettings'
 export default {
   name: 'Logo',
   data () {
@@ -26,7 +26,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: 'Admin Pro',
+      default: config.pageOptions.title,
       required: false
     },
     showTitle: {
