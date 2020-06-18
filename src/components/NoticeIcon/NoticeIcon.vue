@@ -87,8 +87,8 @@ export default {
     }
   },
   mounted () {
-    this.initWebSocket(this.$store.getters.userInfo.id)
-    this.websocket.onmessage = this.onWebSocketMessage
+    // this.initWebSocket(this.$store.getters.userInfo.id)
+    // this.websocket.onmessage = this.onWebSocketMessage
     this.loadData()
   },
   methods: {
@@ -172,7 +172,7 @@ export default {
     }
   },
   destroyed () {
-    this.closeWebSocket()
+    // this.closeWebSocket()
   },
 }
 </script>
