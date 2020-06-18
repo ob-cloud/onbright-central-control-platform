@@ -18,17 +18,16 @@
           </a-col>
 
           <a-col :md="6" :sm="8">
-              <a-form-item label="客户状态">
-                <a-select v-model="queryParam.sex" placeholder="请选择客户状态">
-                  <a-select-option value="">请选择</a-select-option>
-                  <a-select-option value="1">入驻中</a-select-option>
-                  <a-select-option value="2">退驻</a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
+            <a-form-item label="客户状态">
+              <a-select v-model="queryParam.sex" placeholder="请选择客户状态">
+                <a-select-option value="">请选择</a-select-option>
+                <a-select-option value="1">入驻中</a-select-option>
+                <a-select-option value="2">退驻</a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
 
           <template v-if="toggleSearchStatus">
-
 
             <a-col :md="6" :sm="8">
               <a-form-item label="账户状态">
