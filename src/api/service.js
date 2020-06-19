@@ -5,7 +5,7 @@ const _PREFIX = '/accp'
 ////// 客户模块
 
 // 获取客户列表
-const getConsumerList = (params) => getAction(_PREFIX + '/mp/getConsumerList', params)
+const getConsumerList = (params) => getAction('/mp/getConsumerList', params)
 
 // 获取客户详情信息
 const getConsumerDetail = (id) => getAction(_PREFIX + '/mp/getConsumerDetail', {id})
