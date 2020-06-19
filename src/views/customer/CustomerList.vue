@@ -66,7 +66,7 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator" style="border-top: 5px">
-      <a-button @click="handleAdd" type="primary" icon="plus">添加客户</a-button>
+      <a-button @click="handleAddCustomer" type="primary" icon="plus">添加客户</a-button>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay" @click="handleMenuClick">
           <a-menu-item key="1">
@@ -327,6 +327,11 @@
         this.$refs.packageModal.add()
         this.$refs.packageModal.title = '套餐'
         this.$refs.packageModal.disableSubmit = false
+      },
+      handleAddCustomer () {
+        this.$router.push({name: 'customer-list-detail', query: { type: 1 }}, () => {
+          this.$store.dispatch('ToggleMultiTab', false)
+        })
       }
     }
 
