@@ -1,4 +1,4 @@
-import { getAction, postAction, putAction, deleteAction } from '@/utils/ajax'
+import { getAction, postAction, deleteAction } from '@/utils/ajax'
 
 const _PREFIX = '/accp'
 
@@ -11,7 +11,7 @@ const getConsumerList = (params) => getAction(_PREFIX + '/mp/getConsumerList', p
 const getConsumerDetail = (id) => getAction(_PREFIX + '/mp/getConsumerDetail', {id})
 
 // 编辑客户信息
-const editConsumerList = (params) => postAction(_PREFIX + '/mp/editConsumerInfo', params)
+const editConsumer = (params) => postAction(_PREFIX + '/mp/editConsumerInfo', params)
 
 // 删除客户信息
 const delConsumerList = (params) => deleteAction(_PREFIX + '/mp/delConsumerDetail', params)
@@ -28,7 +28,23 @@ const getPackageDetail = (params) => getAction(_PREFIX + '/mp/getPackageDetail',
 const addPackage = (params) => postAction(_PREFIX + '/mp/addPackage', params)
 
 // 编辑套餐
-const editPackageDetail = (params) => postAction(_PREFIX + '/mp/editPackageDetail', params)
+const editPackage = (params) => postAction(_PREFIX + '/mp/editPackageDetail', params)
 
 // 删除套餐
 const delPackage = (params) => deleteAction(_PREFIX + '/mp/delPackage', params)
+
+// 绑定套餐
+const bindPackage = (params) => postAction(_PREFIX + '/mp/bindPackage', params)
+
+export {
+  getConsumerList,
+  getConsumerDetail,
+  editConsumer,
+  delConsumerList,
+  getPackageList,
+  getPackageDetail,
+  addPackage,
+  editPackage,
+  delPackage,
+  bindPackage
+}
