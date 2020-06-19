@@ -53,20 +53,20 @@ module.exports = {
   devServer: {
     port: 3001,
     proxy: {
-     '/pro': {
-        target: 'https://aliiot.on-bright.com/mock/13/pro', //mock API接口系统
+      '/pro/accp': { // 中台接口
+        target: 'https://aliiot.on-bright.com/mock/37', //mock API接口系统
         ws: false,
         changeOrigin: true,
         pathRewrite: {
-          '/pro': ''  //默认所有请求都加了/pro前缀，需要去掉
+          '^/pro/accp': '/accp'  //默认所有请求都加了/pro前缀，需要去掉
         }
       },
-      '/accp': {
-        target: 'https://aliiot.on-bright.com/mock/37/accp', //mock API接口系统
+     '/pro': { // 系统基础接口
+        target: 'https://aliiot.on-bright.com/mock/13', //mock API接口系统
         ws: false,
         changeOrigin: true,
         pathRewrite: {
-          '/accp': ''  //默认所有请求都加了/pro前缀，需要去掉
+          '^/pro': '/pro'  //默认所有请求都加了/pro前缀，需要去掉
         }
       },
       '/nurse': {

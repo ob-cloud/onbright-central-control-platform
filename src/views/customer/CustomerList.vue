@@ -230,19 +230,10 @@
           }
         ],
         url: {
-          // imgServer: window._CONFIG['domianURL'] + '/sys/common/view',
-          syncUser: '/process/extActProcess/doSyncUser',
-          list: '/sys/user/list',
-          delete: '/sys/user/delete',
-          deleteBatch: '/sys/user/deleteBatch',
-          exportXlsUrl: '/sys/user/exportXls',
-          importExcelUrl: 'sys/user/importExcel',
+          list: '/accp/mp/getConsumerList',
+          delete: '/accp/mp/delConsumerDetail',
+          deleteBatch: '/accp/sys/user/deleteBatch'
         },
-      }
-    },
-    computed: {
-      importExcelUrl (){
-        return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`
       }
     },
     methods: {
