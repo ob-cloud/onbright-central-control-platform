@@ -15,6 +15,18 @@ export default [
         },
         "name": "customer-list",
         "id": "8r915b2769fc80648e92d04e84ca059d"
+      },
+      {
+        "path": "/customer/list/detail",
+        "component": "customer/modules/CustomerModal",
+        "route": "1",
+        "meta": {
+          "keepAlive": false,
+          "title": "客户详情",
+          "show": false
+        },
+        "name": "customer-list-detail",
+        "id": "33915b2769fc80648e92d04e84ca059d"
       }
     ],
     "meta": {

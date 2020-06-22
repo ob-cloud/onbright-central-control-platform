@@ -329,9 +329,9 @@
         this.$refs.packageModal.disableSubmit = false
       },
       handleAddCustomer () {
-        this.$router.push({name: 'customer-list-detail', query: { type: 1 }}, () => {
-          this.$store.dispatch('ToggleMultiTab', false)
-        })
+        // this.$router.push({name: 'customer-list-detail', query: { type: 1 }}, () => {
+        //   this.$store.dispatch('ToggleMultiTab', false)
+        // })
       }
     }
 

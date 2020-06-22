@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="breadcrumb">
+    <!-- <div class="breadcrumb">
       <a-breadcrumb :routes="routeList">
         <template slot="itemRender" slot-scope="{route, params, routes, paths}">
           <span v-if="routes.indexOf(route) === routes.length - 1">
@@ -15,13 +15,137 @@
         <a-button shape="circle" icon="left" size="small" @click="$router.go(-1)" />
         <a-button shape="circle" icon="reload" size="small" />
       </div>
-    </div>
+    </div> -->
     <div class="content">
-       <a-card title="Default size card" style="width: 300px">
-        <a slot="extra" href="#">more</a>
-        <p>card content</p>
-        <p>card content</p>
-        <p>card content</p>
+      <a-card title="账号信息" class="card">
+        <a slot="extra" href="#"></a>
+        <a-form :form="form" class="grid-cell">
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="账号名称">
+            <a-input placeholder="请输入账号名称" v-decorator="[ 'username', validatorRules.username]" />
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="账号密码">
+            <a-input type="password" placeholder="请输入新密码" v-decorator="[ 'password', validatorRules.password]" />
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="确认密码">
+            <a-input type="password" @blur="handleConfirmBlur" placeholder="请确认新密码" v-decorator="[ 'confirmpassword', validatorRules.confirmpassword]" />
+          </a-form-item>
+        </a-form>
+      </a-card>
+      <a-card title="基本信息" class="card">
+        <a slot="extra" href="#"></a>
+        <a-form :form="form" class="grid-cell double">
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="客户名称" class="ant-col-sm-12">
+            <a-input placeholder="请输入客户名称" v-decorator="[ 'username', validatorRules.username]" />
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="所在地区" class="ant-col-sm-12">
+            <a-input placeholder="请输入所在地区" />
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="客户状态" class="ant-col-sm-12">
+            <a-select placeholder="请选择客户状态">
+              <a-select-option value="">请选择</a-select-option>
+              <a-select-option value="1">入驻中</a-select-option>
+              <a-select-option value="2">退驻</a-select-option>
+            </a-select>
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="详细地址" class="ant-col-sm-12">
+            <a-input placeholder="请输入详细地址" />
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="客户来源" class="ant-col-sm-12">
+            <a-input placeholder="请输入客户来源" />
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="企业规模" class="ant-col-sm-12">
+            <a-select placeholder="请选择客户状态">
+              <a-select-option value="">请选择</a-select-option>
+              <a-select-option value="1">10人以内</a-select-option>
+              <a-select-option value="2">10-20人</a-select-option>
+              <a-select-option value="3">21-50人</a-select-option>
+              <a-select-option value="4">51-200人</a-select-option>
+              <a-select-option value="5">201-500人</a-select-option>
+              <a-select-option value="6">500人以上</a-select-option>
+            </a-select>
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="归属人员" class="ant-col-sm-12">
+            <a-input placeholder="请输入销售人员" />
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="备注信息" class="ant-col-sm-12">
+            <a-input placeholder="请输入备注信息" />
+          </a-form-item>
+        </a-form>
+      </a-card>
+      <a-card title="联系信息" class="card">
+        <a slot="extra" href="#"></a>
+        <a-form :form="form" class="grid-cell">
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="联系人姓名" class="ant-col-sm-12">
+            <a-input placeholder="请输入联系人姓名" />
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="固定电话" class="ant-col-sm-12">
+            <a-input placeholder="请输入固定电话" />
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="尊称" class="ant-col-sm-12">
+            <a-checkbox>未知</a-checkbox>
+            <a-checkbox>先生</a-checkbox>
+            <a-checkbox>女士</a-checkbox>
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="传真号码" class="ant-col-sm-12">
+            <a-input placeholder="请输入传真号码" />
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="角色" class="ant-col-sm-12">
+            <a-input placeholder="请选择联系人身份" />
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="电子邮件" class="ant-col-sm-12">
+            <a-input placeholder="请输入电子邮件" />
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="手机号码" class="ant-col-sm-12">
+            <a-input placeholder="请输入手机号码" />
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="微信号" class="ant-col-sm-12">
+            <a-input placeholder="请输入微信号" />
+          </a-form-item>
+        </a-form>
+      </a-card>
+      <a-card title="微信配置" class="card">
+        <a-form :form="form" class="grid-cell">
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公众号名称" class="ant-col-sm-12">
+            <a-input placeholder="请输入公众号名称" />
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公众号ID" class="ant-col-sm-12">
+            <a-input placeholder="请输入公众号ID" />
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="AppID" class="ant-col-sm-12">
+            <a-input placeholder="请输入AppID" />
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="APPSecret" class="ant-col-sm-12">
+            <a-input placeholder="请输入APPSecret" />
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="URL" class="ant-col-sm-12">
+            <a-input placeholder="请输入服务验证URL" />
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="Token" class="ant-col-sm-12">
+            <a-input placeholder="请输入Token" />
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="支付商户号" class="ant-col-sm-12">
+            <a-input placeholder="请输入支付商户号" />
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="支付秘钥" class="ant-col-sm-12">
+            <a-input placeholder="请输入支付秘钥" />
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="消息模板ID">
+            <a-input placeholder="请输入消息模板ID" />
+          </a-form-item>
+        </a-form>
+      </a-card>
+      <a-card title="支付宝配置" class="card">
+        <a-form :form="form" class="grid-cell">
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="收款支付宝账号" class="ant-col-sm-12">
+            <a-input placeholder="请输入收款支付宝账号" />
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合作者身份" class="ant-col-sm-12">
+            <a-input placeholder="请输入合作者身份" />
+          </a-form-item>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="校验秘钥">
+            <a-input placeholder="请输入校验秘钥" />
+          </a-form-item>
+        </a-form>
       </a-card>
     </div>
   </div>
@@ -31,6 +155,32 @@
 export default {
   data() {
     return {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 5 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 19 },
+      },
+     form: this.$form.createForm(this),
+     validatorRules: {
+        username: {
+          rules: [{ required: true, message: '请输入账号名称!' }],
+        },
+        password: {
+          rules: [
+            { required: true, message: '请输入账号密码!' },
+            { validator: this.validateToNextPassword }
+          ],
+        },
+        confirmpassword: {
+          rules: [
+            { required: true, message: '请确认账号密码!' },
+            { validator: this.compareToFirstPassword }
+          ],
+        }
+      },
     }
   },
   computed: {
@@ -47,6 +197,26 @@ export default {
   },
   mounted () {
     console.log(this.$route)
+  },
+  methods: {
+    handleConfirmBlur () {
+
+    },
+    validateToNextPassword (rule, value, callback) {
+      if (value && this.confirmDirty) {
+        this.form.validateFields(['confirm'], {
+          force: true
+        })
+      }
+      callback()
+    },
+    compareToFirstPassword (rule, value, callback) {
+      if (value && value !== this.form.getFieldValue('password')) {
+        callback('两次输入的密码不一样！')
+      } else {
+        callback()
+      }
+    },
   },
 }
 </script>
@@ -67,5 +237,42 @@ export default {
     }
   }
 }
+.content {
+  padding: 20px;
 
+  .card {
+    margin-top: 10px;
+
+
+
+    .cell{
+      border: 1px solid #ccc;
+      background-color: #eee;
+      color: #000;
+      padding: 10px;
+      text-align: right;
+    }
+    .cell.value{
+      background-color: #fff;
+      color: #666;
+      text-align: left;
+      margin-left: -1px;
+    }
+  }
+}
+
+</style>
+
+<style lang="less">
+  .grid-cell {
+    .ant-form-item-label{
+      background-color: #eee;
+      border: 1px solid #eee;
+      padding: 6px 5px 5px 5px;
+    }
+    .ant-form-item-control-wrapper{
+      padding: 5px 10px 5px 5px;
+      border: 1px solid #eee;
+    }
+  }
 </style>
