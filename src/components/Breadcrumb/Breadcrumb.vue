@@ -1,22 +1,20 @@
 <script>
 export default {
+  props: {
+    action: {
+      type: Boolean,
+      default: true
+    },
+    actionFn: {
+      type: Function,
+      default: () => {}
+    }
+  },
   data() {
     return {
       // routeList: []
     }
   },
-  // watch: {
-  //   '$route' (val) {
-  //     const routes = val.matched.slice(1)
-  //     const breadcrumb = routes.map(route => {
-  //       return {
-  //         path: route.path,
-  //         breadcrumbName: route.meta.title
-  //       }
-  //     })
-  //     this.routeList = breadcrumb
-  //   }
-  // },
   computed: {
     routeList() {
       const routes = this.$route.matched.slice(1)
@@ -29,21 +27,6 @@ export default {
       return breadcrumb
     }
   },
-  created() {
-    console.log('000000')
-  },
-  mounted() {
-  },
-  props: {
-    action: {
-      type: Boolean,
-      default: false
-    },
-    actionFn: {
-      type: Function,
-      default: () => {}
-    }
-  },
   methods: {
     goback () {
       this.$store.dispatch('ToggleMultiTab', true)
@@ -54,20 +37,32 @@ export default {
       this.$router.replace({
         path: '/refresh'
       })
-      console.log(this.$route)
       // this.$router.replace({path: this.$route.fullPath, query: {...this.$route.query, t: Date.now()}})
     },
+    visitLink (link) {
+      this.$store.dispatch('ToggleMultiTab', true)
+      this.$router.push(link)
+    },
+    confirm () {
+      this.actionFn && this.actionFn()
+      this.$events.$emit('ok')
+    },
+    cancel () {
+      this.goback()
+      this.$events.$emit('cancel')
+    },
     itemRender ({route, routes}) {
+      // <router-link to={route.path}>{route.breadcrumbName}</router-link>
       return routes.indexOf(route) === routes.length - 1 ? (
         <span>{route.breadcrumbName}</span>
       ) : (
-        <router-link to={route.path}>{route.breadcrumbName}</router-link>
+         <span style="cursor: pointer;" {...{on: {click: this.visitLink.bind(this, route.path)}}}>{route.breadcrumbName}</span>
       )
     },
     renderOperator () {
       const action = (
         <div class="operator">
-          <a-button type="primary" size="small" {...{on: {click: this.actionFn}}}>确认</a-button>
+          <a-button type="primary" size="small" {...{on: {click: this.confirm}}}>确认</a-button>
           <a-button size="small" {...{on: {click: this.goback}}}>取消</a-button>
         </div>
       )
