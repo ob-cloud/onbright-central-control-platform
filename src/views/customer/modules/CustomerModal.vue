@@ -1,60 +1,44 @@
 <template>
   <div>
-    <!-- <div class="breadcrumb">
-      <a-breadcrumb :routes="routeList">
-        <template slot="itemRender" slot-scope="{route, params, routes, paths}">
-          <span v-if="routes.indexOf(route) === routes.length - 1">
-            {{ route.breadcrumbName }}
-          </span>
-          <router-link v-else :to="paths.join('/')">
-            {{ route.breadcrumbName }}
-          </router-link>
-        </template>
-      </a-breadcrumb>
-      <div class="operator">
-        <a-button shape="circle" icon="left" size="small" @click="$router.go(-1)" />
-        <a-button shape="circle" icon="reload" size="small" />
-      </div>
-    </div> -->
-    <div class="content">
+    <a-form :form="form" class="content">
       <a-card title="账号信息" class="card">
         <a slot="extra" href="#"></a>
-        <a-form :form="form" class="grid-cell">
+        <div class="grid-cell">
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="账号名称">
             <a-input placeholder="请输入账号名称" v-decorator="[ 'username', validatorRules.username]" />
           </a-form-item>
-          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="账号密码">
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="账号密码" v-if="!customerId">
             <a-input type="password" placeholder="请输入新密码" v-decorator="[ 'password', validatorRules.password]" />
           </a-form-item>
-          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="确认密码">
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="确认密码" v-if="!customerId">
             <a-input type="password" @blur="handleConfirmBlur" placeholder="请确认新密码" v-decorator="[ 'confirmpassword', validatorRules.confirmpassword]" />
           </a-form-item>
-        </a-form>
+        </div>
       </a-card>
       <a-card title="基本信息" class="card">
         <a slot="extra" href="#"></a>
-        <a-form :form="form" class="grid-cell double">
+        <div class="grid-cell double">
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="客户名称" class="ant-col-sm-12">
-            <a-input placeholder="请输入客户名称" v-decorator="[ 'username', validatorRules.username]" />
+            <a-input placeholder="请输入客户名称" v-decorator="[ 'customerName', validatorRules.username]" />
           </a-form-item>
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="所在地区" class="ant-col-sm-12">
-            <a-input placeholder="请输入所在地区" />
+            <a-input placeholder="请输入所在地区" v-decorator="['addr']" />
           </a-form-item>
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="客户状态" class="ant-col-sm-12">
-            <a-select placeholder="请选择客户状态">
+            <a-select v-decorator="[ 'status', {}]" placeholder="请选择客户状态">
               <a-select-option value="">请选择</a-select-option>
               <a-select-option value="1">入驻中</a-select-option>
               <a-select-option value="2">退驻</a-select-option>
             </a-select>
           </a-form-item>
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="详细地址" class="ant-col-sm-12">
-            <a-input placeholder="请输入详细地址" />
+            <a-input placeholder="请输入详细地址" v-decorator="[ 'detailAddr', {}]" />
           </a-form-item>
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="客户来源" class="ant-col-sm-12">
-            <a-input placeholder="请输入客户来源" />
+            <a-input placeholder="请输入客户来源" v-decorator="[ 'from', {}]" />
           </a-form-item>
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="企业规模" class="ant-col-sm-12">
-            <a-select placeholder="请选择客户状态">
+            <a-select v-decorator="[ 'scale', {}]" placeholder="请选择企业规模">
               <a-select-option value="">请选择</a-select-option>
               <a-select-option value="1">10人以内</a-select-option>
               <a-select-option value="2">10-20人</a-select-option>
@@ -65,21 +49,21 @@
             </a-select>
           </a-form-item>
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="归属人员" class="ant-col-sm-12">
-            <a-input placeholder="请输入销售人员" />
+            <a-input placeholder="请输入销售人员" v-decorator="[ 'owner', {}]" />
           </a-form-item>
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="备注信息" class="ant-col-sm-12">
-            <a-input placeholder="请输入备注信息" />
+            <a-input placeholder="请输入备注信息" v-decorator="[ 'note', {}]" />
           </a-form-item>
-        </a-form>
+        </div>
       </a-card>
       <a-card title="联系信息" class="card">
         <a slot="extra" href="#"></a>
-        <a-form :form="form" class="grid-cell">
+        <div class="grid-cell">
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="联系人姓名" class="ant-col-sm-12">
-            <a-input placeholder="请输入联系人姓名" />
+            <a-input placeholder="请输入联系人姓名" v-decorator="['contact', {}]" />
           </a-form-item>
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="固定电话" class="ant-col-sm-12">
-            <a-input placeholder="请输入固定电话" />
+            <a-input placeholder="请输入固定电话" v-decorator="['telephone', {}]" />
           </a-form-item>
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="尊称" class="ant-col-sm-12">
             <a-checkbox>未知</a-checkbox>
@@ -87,67 +71,70 @@
             <a-checkbox>女士</a-checkbox>
           </a-form-item>
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="传真号码" class="ant-col-sm-12">
-            <a-input placeholder="请输入传真号码" />
+            <a-input placeholder="请输入传真号码" v-decorator="['fax', {}]" />
           </a-form-item>
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="角色" class="ant-col-sm-12">
-            <a-input placeholder="请选择联系人身份" />
+            <a-input placeholder="请选择联系人身份" v-decorator="['role', {}]" />
           </a-form-item>
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="电子邮件" class="ant-col-sm-12">
-            <a-input placeholder="请输入电子邮件" />
+            <a-input placeholder="请输入电子邮件" v-decorator="['email', {}]" />
           </a-form-item>
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="手机号码" class="ant-col-sm-12">
-            <a-input placeholder="请输入手机号码" />
+            <a-input placeholder="请输入手机号码" v-decorator="['mobile', {}]" />
           </a-form-item>
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="微信号" class="ant-col-sm-12">
             <a-input placeholder="请输入微信号" />
           </a-form-item>
-        </a-form>
+        </div>
       </a-card>
       <a-card title="微信配置" class="card">
-        <a-form :form="form" class="grid-cell">
+        <a slot="extra" href="#"></a>
+        <div class="grid-cell">
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公众号名称" class="ant-col-sm-12">
-            <a-input placeholder="请输入公众号名称" />
+            <a-input placeholder="请输入传真号码" v-decorator="['n3', {}]" />
+            <!-- <a-input placeholder="请输入公众号名称" v-decorator="['name', {}]" /> -->
           </a-form-item>
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公众号ID" class="ant-col-sm-12">
-            <a-input placeholder="请输入公众号ID" />
+            <a-input placeholder="请输入公众号ID" v-decorator="['uniacid', {}]" />
           </a-form-item>
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="AppID" class="ant-col-sm-12">
-            <a-input placeholder="请输入AppID" />
+            <a-input placeholder="请输入AppID" v-decorator="['appid', {}]" />
           </a-form-item>
-          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="APPSecret" class="ant-col-sm-12">
-            <a-input placeholder="请输入APPSecret" />
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="AppSecret" class="ant-col-sm-12">
+            <a-input placeholder="请输入AppSecret" v-decorator="['appsecret', {}]" />
           </a-form-item>
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="URL" class="ant-col-sm-12">
-            <a-input placeholder="请输入服务验证URL" />
+            <a-input placeholder="请输入服务验证URL" v-decorator="['url', {}]" />
           </a-form-item>
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="Token" class="ant-col-sm-12">
-            <a-input placeholder="请输入Token" />
+            <a-input placeholder="请输入Token" v-decorator="['token', {}]" />
           </a-form-item>
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="支付商户号" class="ant-col-sm-12">
-            <a-input placeholder="请输入支付商户号" />
+            <a-input placeholder="请输入支付商户号" v-decorator="['merchantId', {}]" />
           </a-form-item>
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="支付秘钥" class="ant-col-sm-12">
-            <a-input placeholder="请输入支付秘钥" />
+            <a-input placeholder="请输入支付秘钥" v-decorator="['wechatRefundCert', {}]" />
           </a-form-item>
-          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="消息模板ID">
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="消息模板ID" class="ant-col-sm-24">
             <a-input placeholder="请输入消息模板ID" />
           </a-form-item>
-        </a-form>
+        </div>
       </a-card>
       <a-card title="支付宝配置" class="card">
-        <a-form :form="form" class="grid-cell">
+        <a slot="extra" href="#"></a>
+        <div class="grid-cell">
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="收款支付宝账号" class="ant-col-sm-12">
-            <a-input placeholder="请输入收款支付宝账号" />
+            <a-input placeholder="请输入收款支付宝账号" v-decorator="['alipayAccount', {}]" />
           </a-form-item>
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合作者身份" class="ant-col-sm-12">
-            <a-input placeholder="请输入合作者身份" />
+            <a-input placeholder="请输入合作者身份" v-decorator="['alipayPartnerId', {}]" />
           </a-form-item>
-          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="校验秘钥">
-            <a-input placeholder="请输入校验秘钥" />
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="校验秘钥" class="ant-col-sm-24">
+            <a-input placeholder="请输入校验秘钥" v-decorator="['alipaySecret', {}]" />
           </a-form-item>
-        </a-form>
+        </div>
       </a-card>
-    </div>
+    </a-form>
   </div>
 </template>
 
@@ -155,6 +142,9 @@
 export default {
   data() {
     return {
+      model: {
+      },
+      customerId: '',
       labelCol: {
         xs: { span: 24 },
         sm: { span: 5 },
@@ -195,10 +185,50 @@ export default {
       return breadcrumb
     }
   },
+  created() {
+    this.$events.$on('ok', () => {
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          console.log('Received values of form: ', values);
+        }
+      })
+    })
+  },
   mounted () {
     console.log(this.$route)
+    const customerId = this.$route.query.customerId
+    if (customerId) {
+      this.customerId = customerId
+      this.getCustomerDetail().then(record => {
+        this.edit(record)
+      })
+    } else {
+      this.add()
+    }
   },
   methods: {
+    getCustomerDetail () {
+      return Promise.resolve({})
+    },
+    refresh () {
+      this.customerId = ''
+    },
+    add () {
+      this.refresh()
+      this.edit({})
+    },
+    edit (record) {
+      // this.initialRoleList()
+      this.form.resetFields()
+      if (record.hasOwnProperty('customerId')) {
+        // this.loadUserRoles(record.id)
+      }
+      // this.customerId = record.customerId
+      this.model = Object.assign({}, record)
+      this.$nextTick(() => {
+        this.form.setFieldsValue(this.model)
+      })
+    },
     handleConfirmBlur () {
 
     },

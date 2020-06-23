@@ -110,7 +110,7 @@
         @change="handleTableChange"
       >
         <span slot="action" slot-scope="text, record">
-          <a @click="handleEdit(record)">编辑</a>
+          <a @click="handleEditCustomer(record)">编辑</a>
 
           <a-divider type="vertical" />
 
@@ -244,7 +244,7 @@
           }
         ],
         url: {
-          list: '/mp/getConsumerList',
+          list: '/accp/mp/getConsumerList',
           delete: '/accp/mp/delConsumerDetail',
           deleteBatch: '/accp/sys/user/deleteBatch'
         },
@@ -330,6 +330,11 @@
       },
       handleAddCustomer () {
         this.$router.push({path: '/customer/list/detail', query: { type: 1, t: Date.now() }}, () => {
+          this.$store.dispatch('ToggleMultiTab', false)
+        })
+      },
+      handleEditCustomer (record) {
+        this.$router.push({path: '/customer/list/detail', query: { customerId: record.customerId, t: Date.now() }}, () => {
           this.$store.dispatch('ToggleMultiTab', false)
         })
       }

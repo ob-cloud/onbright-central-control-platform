@@ -29,4 +29,4 @@ Vue.use(VueStorage, config.storageOptions)
 
 Vue.prototype.$isAjaxSuccess = isAjaxSuccess
 
-Vue.prototype.$event = event
+Vue.prototype.$events = event
