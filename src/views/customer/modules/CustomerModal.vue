@@ -238,7 +238,7 @@ export default {
   }
 }
 .content {
-  padding: 20px;
+  // padding: 20px;
 
   .card {
     margin-top: 10px;

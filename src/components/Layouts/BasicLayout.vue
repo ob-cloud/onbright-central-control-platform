@@ -1,7 +1,7 @@
 <template>
   <global-layout>
     <multi-tab v-if="!isMobile() && multiTab" :class="this.fixedMultiTab && 'ant-multitab-fixedMultiTab'" :isHomeTabFix="tabConfig.fix" :homeIndex="tabConfig.index"></multi-tab>
-    <!-- <BreadCrumb></BreadCrumb> -->
+    <BreadCrumb v-else-if="!isMobile() && !multiTab"></BreadCrumb>
     <transition name="page-transition">
       <IRouteView :style="{'margin-top': !isMobile() && this.fixedMultiTab ? '41px' : '0'}" />
     </transition>
@@ -10,7 +10,7 @@
 
 <script>
 import GlobalLayout from '@/components/Base/GlobalLayout'
-// import BreadCrumb from '@/components/Breadcrumb/Breadcrumb'
+import BreadCrumb from '@/components/Breadcrumb/Breadcrumb'
 import IRouteView from '@layout/RouteView'
 import { mixin, mixinDevice } from '@/utils/mixin'
 import config from '@/config/defaultSettings'
@@ -21,7 +21,7 @@ export default {
   components: {
     GlobalLayout,
     IRouteView,
-    // BreadCrumb
+    BreadCrumb
   },
   data () {
     return {

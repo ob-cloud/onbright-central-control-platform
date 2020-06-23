@@ -1,6 +1,6 @@
 export default [
   {
-    "redirect": null,
+    "redirect": "/customer/list",
     "path": "/customer",
     "component": "Layouts/RouteView",
     "route": "1",
@@ -23,8 +23,9 @@ export default [
         "meta": {
           "keepAlive": false,
           "title": "客户详情",
-          "show": false
+          "hidden": true
         },
+        "hidden": true,
         "name": "customer-list-detail",
         "id": "33915b2769fc80648e92d04e84ca059d"
       }
