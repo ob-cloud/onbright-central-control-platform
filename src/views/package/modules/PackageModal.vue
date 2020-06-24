@@ -28,18 +28,18 @@
         </a-form-item>
 
         <a-form-item label="套餐价格" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input placeholder="请输入登陆密码" v-decorator="[ 'packagePrice', validatorRules.packagePrice]" />
+          <a-input placeholder="请输入登陆密码" v-decorator="[ 'packagePrice', validatorRules.packagePrice]" :readOnly="disableSubmit" />
         </a-form-item>
 
         <a-form-item label="套餐状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-select v-decorator="[ 'status', {}]" placeholder="请选择套餐状态">
+          <a-select v-decorator="[ 'status', {}]" placeholder="请选择套餐状态" :readOnly="disableSubmit">
             <a-select-option :value="1">启用</a-select-option>
             <a-select-option :value="2">禁用</a-select-option>
           </a-select>
         </a-form-item>
 
         <a-form-item label="备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input placeholder="请输入备注" v-decorator="[ 'description', validatorRules.description]" />
+          <a-textarea placeholder="请输入备注" auto-size v-decorator="[ 'description']" :readOnly="disableSubmit" />
         </a-form-item>
 
       </a-form>

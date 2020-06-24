@@ -66,7 +66,7 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator" style="border-top: 5px">
-      <a-button @click="handleAddCustomer" type="primary" icon="plus">添加客户</a-button>
+      <a-button @click="handleActionAdd" type="primary" icon="plus">添加客户</a-button>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay" @click="handleMenuClick">
           <a-menu-item key="1">
@@ -110,7 +110,7 @@
         @change="handleTableChange"
       >
         <span slot="action" slot-scope="text, record">
-          <a @click="handleEditCustomer(record)">编辑</a>
+          <a @click="handleActionEdit(record)">编辑</a>
 
           <a-divider type="vertical" />
 
@@ -123,7 +123,7 @@
                 <a href="javascript:;" @click="handlePackage(record)">套餐</a>
               </a-menu-item>
               <a-menu-item>
-                <a href="javascript:;" @click="handleDetail(record)">详情</a>
+                <a href="javascript:;" @click="handleActionDetail(record)">详情</a>
               </a-menu-item>
 
               <a-menu-item>
@@ -328,14 +328,22 @@
         this.$refs.packageModal.title = '套餐'
         this.$refs.packageModal.disableSubmit = false
       },
-      handleAddCustomer () {
+      handleActionAdd () {
         this.$router.push({path: '/customer/list/detail', query: { type: 1, t: Date.now() }}, () => {
           this.$store.dispatch('ToggleMultiTab', false)
+          this.$store.dispatch('ToggleIsActionBreadcrumb', true)
         })
       },
-      handleEditCustomer (record) {
-        this.$router.push({path: '/customer/list/detail', query: { customerId: record.customerId, t: Date.now() }}, () => {
+      handleActionEdit (record) {
+        this.$router.push({path: '/customer/list/detail', query: { type: 2, customerId: record.customerId, t: Date.now() }}, () => {
           this.$store.dispatch('ToggleMultiTab', false)
+          this.$store.dispatch('ToggleIsActionBreadcrumb', true)
+        })
+      },
+      handleActionDetail (record) {
+        this.$router.push({path: '/customer/list/detail', query: { type: 3, customerId: record.customerId, disableSubmit: true, t: Date.now() }}, () => {
+          this.$store.dispatch('ToggleMultiTab', false)
+          this.$store.dispatch('ToggleIsActionBreadcrumb', false)
         })
       }
     }
