@@ -244,9 +244,9 @@
           }
         ],
         url: {
-          list: '/accp/mp/getConsumerList',
-          delete: '/accp/mp/delConsumerDetail',
-          deleteBatch: '/accp/sys/user/deleteBatch'
+          list: '/mp/getConsumerList',
+          delete: '/mp/delConsumerDetail',
+          deleteBatch: '/sys/user/deleteBatch'
         },
       }
     },

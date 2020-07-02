@@ -233,6 +233,8 @@
             this.model.route = this.routeSwitch
             this.model.keepAlive = this.isKeepalive
             this.model.internalOrExternal = this.internalOrExternal
+            this.model.children = undefined
+            this.model.key = undefined
             let formData = Object.assign(this.model, values)
             if ((formData.menuType === 1 || formData.menuType === 2) && !formData.parentId) {
               this.validateStatus = 'error'

@@ -223,9 +223,9 @@
           }
         ],
         url: {
-          list: '/accp/mp/getPackageList',
-          delete: '/accp/mp/delPackage',
-          deleteBatch: '/accp/sys/user/deleteBatch'
+          list: '/mp/getPackageList',
+          delete: '/mp/delPackage',
+          deleteBatch: '/sys/user/deleteBatch'
         },
       }
     },
