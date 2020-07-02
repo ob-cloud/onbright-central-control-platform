@@ -69,7 +69,7 @@ export const ProListMixin = {
       }
       let params = this.getQueryParams() //查询条件
       this.loading = true
-      getAction(this.url.list, params).then((res) => {
+      getAction(this.$MOCKPREFIX + this.url.list, params).then((res) => {
         if (this.$isAjaxSuccess(res.code)) {
           this.dataSource = res.result.records
           this.ipagination.total = res.result.total
@@ -151,7 +151,7 @@ export const ProListMixin = {
           title: '确认删除',
           content: '是否删除选中数据?',
           onOk: function () {
-            deleteAction(that.url.deleteBatch, {
+            deleteAction(that.$MOCKPREFIX + that.url.deleteBatch, {
               ids: ids
             }).then((res) => {
               if (that.$isAjaxSuccess(res.code)) {
@@ -172,7 +172,7 @@ export const ProListMixin = {
         return
       }
       let that = this
-      deleteAction(that.url.delete, {
+      deleteAction(that.$MOCKPREFIX + that.url.delete, {
         id: id
       }).then((res) => {
         if (this.$isAjaxSuccess(res.code)) {
@@ -286,5 +286,20 @@ export const ProListMixin = {
       }
       window.open(window._CONFIG['domianURL'] + '/sys/common/download/' + text)
     },
+    handleAction (query = {}, multiTab = false, breadcrumb = false) {
+      this.$router.push({path: this.path.detail, query: { t: Date.now(), ...query }}, () => {
+        this.$store.dispatch('ToggleMultiTab', multiTab)
+        this.$store.dispatch('ToggleIsActionBreadcrumb', breadcrumb)
+      })
+    },
+    handleActionAdd () {
+      this.handleAction({ type: 1 }, false, true)
+    },
+    handleActionEdit (id) {
+      this.handleAction({ type: 2, id }, false, true)
+    },
+    handleActionDetail (id) {
+      this.handleAction({ type: 3, id, disableSubmit: true }, false, false)
+    }
   }
 }

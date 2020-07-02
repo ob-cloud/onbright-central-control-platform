@@ -1,17 +1,18 @@
-import { getAction, postAction, deleteAction } from '@/utils/ajax'
+import { getAction, postAction, putAction, deleteAction } from '@/utils/ajax'
+import config from '@/config/defaultSettings'
 
-const _PREFIX = '/accp'
+const _PREFIX = config.mockPrefix
 
 ////// 客户模块
 
 // 获取客户列表
-const getConsumerList = (params) => getAction('/mp/getConsumerList', params)
+const getConsumerList = (params) => getAction(_PREFIX + '/mp/getConsumerList', params)
 
 // 获取客户详情信息
 const getConsumerDetail = (id) => getAction(_PREFIX + '/mp/getConsumerDetail', {id})
 
 // 编辑客户信息
-const editConsumer = (params) => postAction(_PREFIX + '/mp/editConsumerInfo', params)
+const editConsumer = (params) => putAction(_PREFIX + '/mp/editConsumerInfo', params)
 
 // 删除客户信息
 const delConsumerList = (params) => deleteAction(_PREFIX + '/mp/delConsumerDetail', params)
@@ -28,7 +29,7 @@ const getPackageDetail = (params) => getAction(_PREFIX + '/mp/getPackageDetail',
 const addPackage = (params) => postAction(_PREFIX + '/mp/addPackage', params)
 
 // 编辑套餐
-const editPackage = (params) => postAction(_PREFIX + '/mp/editPackageDetail', params)
+const editPackage = (params) => putAction(_PREFIX + '/mp/editPackageDetail', params)
 
 // 删除套餐
 const delPackage = (params) => deleteAction(_PREFIX + '/mp/delPackage', params)
