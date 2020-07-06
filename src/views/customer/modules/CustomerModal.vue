@@ -40,7 +40,6 @@
           </a-form-item>
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="客户状态" class="ant-col-sm-12">
             <a-select v-decorator="[ 'customerInformationParam.status', {}]" placeholder="请选择客户状态">
-              <a-select-option value="">请选择</a-select-option>
               <a-select-option value="1">入驻中</a-select-option>
               <a-select-option value="2">退驻</a-select-option>
             </a-select>
@@ -230,7 +229,12 @@ export default {
       this.entityId = customerId
       this.loading = true
       getConsumerDetail(this.entityId).then(res => {
-        this.edit(res.result)
+        if (this.$isAjaxSuccess(res.code)) {
+          this.edit(res.result)
+        } else {
+          this.$message.warning(res.message)
+        }
+      }).finally(() => {
         this.loading = false
       })
       if (type === 3) { // preview mode

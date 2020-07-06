@@ -120,10 +120,10 @@
             </a>
             <a-menu slot="overlay">
               <a-menu-item>
-                <a href="javascript:;" @click="handlePackage(record)">套餐</a>
+                <a href="javascript:;" @click="handlePackage(record.customerId)">套餐</a>
               </a-menu-item>
               <a-menu-item>
-                <a href="javascript:;" @click="handleActionDetail(record)">详情</a>
+                <a href="javascript:;" @click="handleActionDetail(record.customerId)">详情</a>
               </a-menu-item>
 
               <a-menu-item>
@@ -131,19 +131,19 @@
               </a-menu-item>
 
               <a-menu-item>
-                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
+                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.customerId, 'customerId')">
                   <a>删除</a>
                 </a-popconfirm>
               </a-menu-item>
 
-              <a-menu-item v-if="record.status==1">
-                <a-popconfirm title="确定冻结吗?" @confirm="() => handleFrozen(record.id, 2, record.username)">
+              <a-menu-item v-if="record.status === 1">
+                <a-popconfirm title="确定冻结吗?" @confirm="() => handleFrozen(record.customerId, 0, record.username)">
                   <a>冻结</a>
                 </a-popconfirm>
               </a-menu-item>
 
-              <a-menu-item v-if="record.status==2">
-                <a-popconfirm title="确定解冻吗?" @confirm="() => handleFrozen(record.id, 1, record.username)">
+              <a-menu-item v-if="record.status === 0">
+                <a-popconfirm title="确定解冻吗?" @confirm="() => handleFrozen(record.customerId, 1, record.username)">
                   <a>解冻</a>
                 </a-popconfirm>
               </a-menu-item>
@@ -158,7 +158,7 @@
 </template>
 
 <script>
-  import { frozenBatch } from '@/api/system'
+  import { frozenBatch } from '@/api/service'
   import { ProListMixin } from '@/utils/mixins/ProListMixin'
   import PasswordModal from './modules/PasswordModal'
   import PackageModal from './modules/PackageModal'
@@ -189,16 +189,16 @@
             dataIndex: 'customerName',
             width: 120
           },
-          {
-            title: '客户状态',
-            align: 'center',
-            width: 100,
-            dataIndex: 'status',
-            customRender (t) {
-              const sexMap = { 1: '入驻中', 2: '退驻'}
-              return sexMap[t] || ''
-            }
-          },
+          // {
+          //   title: '客户状态',
+          //   align: 'center',
+          //   width: 100,
+          //   dataIndex: 'status',
+          //   customRender (t) {
+          //     const sexMap = { 1: '入驻中', 2: '退驻'}
+          //     return sexMap[t] || ''
+          //   }
+          // },
           {
             title: '联系人',
             align: 'center',
@@ -222,10 +222,10 @@
             title: '账户状态',
             align: 'center',
             width: 100,
-            dataIndex: 'accountStatus',
+            dataIndex: 'status',
             customRender (t) {
-              const sexMap = {1: '正常', 2: '冻结'}
-              return sexMap[t] || ''
+              const StatusMap = {0: '冻结', 1: '正常'}
+              return StatusMap[t] || ''
             }
           },
           {

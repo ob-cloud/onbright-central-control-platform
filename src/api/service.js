@@ -9,7 +9,7 @@ const _PREFIX = config.mockPrefix
 const getConsumerList = (params) => getAction(_PREFIX + '/mp/getConsumerList', params)
 
 // 获取客户详情信息
-const getConsumerDetail = (consumerId) => getAction(_PREFIX + '/mp/getConsumerDetail', {consumerId})
+const getConsumerDetail = (customerId) => getAction(_PREFIX + '/mp/getConsumerDetail', {customerId})
 
 // 添加客户信息
 const addConsumer = (params) => postAction(_PREFIX + '/mp/addConsumerInfo', params)
@@ -19,6 +19,9 @@ const editConsumer = (params) => putAction(_PREFIX + '/mp/editConsumerInfo', par
 
 // 删除客户信息
 const delConsumerList = (params) => deleteAction(_PREFIX + '/mp/delConsumerDetail', params)
+
+// 批量冻结用户
+const frozenBatch = (params) => putAction(_PREFIX + '/mp/frozenBatch', params)
 
 ////// 套餐模块
 
@@ -46,6 +49,7 @@ export {
   addConsumer,
   editConsumer,
   delConsumerList,
+  frozenBatch,
   getPackageList,
   getPackageDetail,
   addPackage,
