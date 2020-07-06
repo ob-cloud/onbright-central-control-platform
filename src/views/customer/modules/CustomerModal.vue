@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <a-spin :spinning="loading">
     <a-form :form="form" class="content">
       <a-card title="账号信息" class="card">
         <a slot="extra" href="#"></a>
@@ -14,19 +14,19 @@
             <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="确认密码">
               <a-input type="password" @blur="handleConfirmBlur" placeholder="请确认新密码" v-decorator="[ 'confirmpassword', validatorRules.confirmpassword]" />
             </a-form-item>
-            <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="用户角色">
-              <a-select
-                style="width: 100%"
-                placeholder="请选择用户角色"
-                optionFilterProp="children"
-                v-decorator="[ 'role', {}]"
-              >
-                <a-select-option v-for="(role,roleindex) in roleList" :key="roleindex.toString()" :value="role.id">
-                  {{ role.roleName }}
-                </a-select-option>
-              </a-select>
-            </a-form-item>
           </template>
+          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="用户角色">
+            <a-select
+              style="width: 100%"
+              placeholder="请选择用户角色"
+              optionFilterProp="children"
+              v-decorator="[ 'role', {}]"
+            >
+              <a-select-option v-for="(role,roleindex) in roleList" :key="roleindex.toString()" :value="role.id">
+                {{ role.roleName }}
+              </a-select-option>
+            </a-select>
+          </a-form-item>
         </div>
       </a-card>
       <a-card title="基本信息" class="card">
@@ -152,7 +152,7 @@
         </div>
       </a-card>
     </a-form>
-  </div>
+  </a-spin>
 </template>
 
 <script>
@@ -162,6 +162,7 @@ import { queryAllRole } from '@/api/system'
 export default {
   data() {
     return {
+      loading: false,
       model: {
       },
       disableSubmit: false,
@@ -196,21 +197,21 @@ export default {
     }
   },
   created() {
-    this.$events.$on('ok', ($breadcrumb) => {
+    this.$events.$on('ok', () => {
       const that = this
       this.form.validateFields((err, values) => {
         if (!err) {
           console.log('Received values of form: ', values);
           let formData = Object.assign(that.model, values)
           formData.confirmpassword = undefined
-          if (!that.model.id) {
+          if (!that.model.customerId) {
             formData.password = md5(formData.password)
           }
-          let obj = !that.model.id ? addConsumer(formData) : editConsumer(formData)
+          let obj = !that.model.customerId ? addConsumer(formData) : editConsumer(formData)
           obj.then((res) => {
             if (that.$isAjaxSuccess(res.code)) {
               that.$message.success(res.message)
-              $breadcrumb.goback()
+              that.$router.push('/customer/list')
             } else {
               that.$message.warning(res.message)
             }
@@ -224,10 +225,13 @@ export default {
     const customerId = this.$route.query.id
     const type = this.$route.query.type
     this.disableSubmit = false
+    this.loading = false
     if (customerId) {
       this.entityId = customerId
-      getConsumerDetail(this.entityId).then(record => {
-        this.edit(record)
+      this.loading = true
+      getConsumerDetail(this.entityId).then(res => {
+        this.edit(res.result)
+        this.loading = false
       })
       if (type === 3) { // preview mode
         this.disableSubmit = true
@@ -286,6 +290,9 @@ export default {
       }
     },
   },
+  destroyed () {
+    this.$events.$off('ok')
+  }
 }
 </script>
 
