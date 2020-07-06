@@ -110,7 +110,7 @@
         @change="handleTableChange"
       >
         <span slot="action" slot-scope="text, record">
-          <a @click="handleActionEdit(record)">编辑</a>
+          <a @click="handleActionEdit(record.customerId)">编辑</a>
 
           <a-divider type="vertical" />
 
@@ -248,6 +248,9 @@
           delete: '/mp/delConsumerDetail',
           deleteBatch: '/sys/user/deleteBatch'
         },
+        path: {
+          detail: '/customer/list/detail'
+        }
       }
     },
     methods: {
@@ -327,24 +330,6 @@
         this.$refs.packageModal.add()
         this.$refs.packageModal.title = '套餐'
         this.$refs.packageModal.disableSubmit = false
-      },
-      handleActionAdd () {
-        this.$router.push({path: '/customer/list/detail', query: { type: 1, t: Date.now() }}, () => {
-          this.$store.dispatch('ToggleMultiTab', false)
-          this.$store.dispatch('ToggleIsActionBreadcrumb', true)
-        })
-      },
-      handleActionEdit (record) {
-        this.$router.push({path: '/customer/list/detail', query: { type: 2, customerId: record.customerId, t: Date.now() }}, () => {
-          this.$store.dispatch('ToggleMultiTab', false)
-          this.$store.dispatch('ToggleIsActionBreadcrumb', true)
-        })
-      },
-      handleActionDetail (record) {
-        this.$router.push({path: '/customer/list/detail', query: { type: 3, customerId: record.customerId, disableSubmit: true, t: Date.now() }}, () => {
-          this.$store.dispatch('ToggleMultiTab', false)
-          this.$store.dispatch('ToggleIsActionBreadcrumb', false)
-        })
       }
     }
 

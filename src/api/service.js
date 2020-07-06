@@ -9,7 +9,10 @@ const _PREFIX = config.mockPrefix
 const getConsumerList = (params) => getAction(_PREFIX + '/mp/getConsumerList', params)
 
 // 获取客户详情信息
-const getConsumerDetail = (id) => getAction(_PREFIX + '/mp/getConsumerDetail', {id})
+const getConsumerDetail = (consumerId) => getAction(_PREFIX + '/mp/getConsumerDetail', {consumerId})
+
+// 添加客户信息
+const addConsumer = (params) => postAction(_PREFIX + '/mp/addConsumerInfo', params)
 
 // 编辑客户信息
 const editConsumer = (params) => putAction(_PREFIX + '/mp/editConsumerInfo', params)
@@ -40,6 +43,7 @@ const bindPackage = (params) => postAction(_PREFIX + '/mp/bindPackage', params)
 export {
   getConsumerList,
   getConsumerDetail,
+  addConsumer,
   editConsumer,
   delConsumerList,
   getPackageList,
