@@ -21,6 +21,20 @@
           <a-input placeholder="请输入角色编码" :disabled="roleDisabled" v-decorator="[ 'roleCode', validatorRules.roleCode]" />
         </a-form-item> -->
 
+        <a-form-item label="关联附属角色" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-select
+            mode="multiple"
+            style="width: 100%"
+            placeholder="请选择角色"
+            optionFilterProp="children"
+            v-model="selectedRole"
+          >
+            <a-select-option v-for="(role,roleindex) in roleList" :key="roleindex.toString()" :value="role.id">
+              {{ role.roleName }}
+            </a-select-option>
+          </a-select>
+        </a-form-item>
+
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="描述">
           <a-textarea :rows="5" placeholder="..." v-decorator="[ 'description', validatorRules.description ]" />
         </a-form-item>
@@ -31,7 +45,7 @@
 
 <script>
   import pick from 'lodash.pick'
-  import { addRole, editRole } from '@/api/system'
+  import { addRole, editRole, queryAllRole, queryUserRole } from '@/api/system'
 
   export default {
     name: 'RoleModal',
@@ -49,6 +63,8 @@
           xs: { span: 24 },
           sm: { span: 16 },
         },
+        selectedRole: [],
+        roleList: [],
         confirmLoading: false,
         form: this.$form.createForm(this),
         validatorRules: {
@@ -78,19 +94,23 @@
       },
       edit (record) {
         this.form.resetFields()
+        this.initialRoleList()
         this.model = Object.assign({}, record);
         this.visible = true
 
         //编辑页面禁止修改角色编码
         this.roleDisabled = !!this.model.id
+        if (this.model.id) {
+          this.loadUserRoles(this.model.id)
+        }
         this.$nextTick(() => {
           this.form.setFieldsValue(pick(this.model,'roleName', 'description','roleCode'))
         })
-
       },
       close () {
         this.$emit('close')
         this.visible = false
+        this.selectedRole = []
       },
       handleOk () {
         const that = this
@@ -99,6 +119,7 @@
           if (!err) {
             that.confirmLoading = true
             let formData = Object.assign(this.model, values)
+            formData.selectedroles = this.selectedRole.length > 0 ? this.selectedRole.join(',') : ''
             let obj = !this.model.id ? addRole(formData) : editRole(formData)
             obj.then((res)=>{
               if(this.$isAjaxSuccess(res.code)){
@@ -116,6 +137,24 @@
       },
       handleCancel () {
         this.close()
+      },
+      initialRoleList () {
+        queryAllRole({ column: '', order: true }).then((res) => {
+          if (this.$isAjaxSuccess(res.code)) {
+            this.roleList = res.result.records
+          } else {
+            console.log(res.message)
+          }
+        })
+      },
+      loadUserRoles (userid) {
+        queryUserRole({ userid }).then((res) => {
+          if (this.$isAjaxSuccess(res.code)) {
+            this.selectedRole = res.result
+          } else {
+            console.log(res.message)
+          }
+        })
       },
       // validateRoleCode (rule, value, callback){
       //   if(/[\u4E00-\u9FA5]/g.test(value)){
