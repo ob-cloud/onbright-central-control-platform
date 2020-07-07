@@ -160,7 +160,7 @@
             align: 'center',
             sorter: true,
             customRender(t) {
-              return dayjs(new Date(t)).format('YYYY-MM-DD HH:mm:ss')
+              return t && dayjs(new Date(t)).format('YYYY-MM-DD HH:mm:ss')
             }
           },
           {

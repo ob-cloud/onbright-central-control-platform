@@ -166,7 +166,7 @@ export const ProListMixin = {
         });
       }
     },
-    handleDelete (id, idProperty) {
+    handleDelete (id, idProperty = '') {
       if (!this.url.delete) {
         this.$message.error('请设置url.delete属性!')
         return
@@ -294,11 +294,13 @@ export const ProListMixin = {
     handleActionAdd () {
       this.handleAction({ type: 1 }, false, true)
     },
-    handleActionEdit (id) {
-      this.handleAction({ type: 2, id }, false, true)
+    handleActionEdit (id, idProperty = '') {
+      const params = idProperty ? { [idProperty]: id } : { id }
+      this.handleAction({ type: 2, ...params }, false, true)
     },
-    handleActionDetail (id) {
-      this.handleAction({ type: 3, id, disableSubmit: true }, false, false)
+    handleActionDetail (id, idProperty = '') {
+      const params = idProperty ? { [idProperty]: id } : { id }
+      this.handleAction({ type: 3, ...params, disableSubmit: true }, false, false)
     }
   }
 }
