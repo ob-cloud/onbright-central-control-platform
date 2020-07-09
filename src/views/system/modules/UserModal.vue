@@ -220,7 +220,7 @@
           order: true
         }).then((res) => {
           if (this.$isAjaxSuccess(res.code)) {
-            this.roleList = res.result.records
+            this.roleList = res.result
           } else {
             console.log(res.message)
           }
