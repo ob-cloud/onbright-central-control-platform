@@ -222,7 +222,7 @@
           list: '/Svc//getSvcOrderList',
         },
         path: {
-          detail: '/service/record/detail'
+          detail: this.$routePath.CPC_SERVICE_RECORD_DETAIL
         }
       }
     },

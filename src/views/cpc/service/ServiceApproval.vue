@@ -193,7 +193,7 @@
           list: '/Svc/getSvcApproveList',
         },
         path: {
-          detail: '/service/approval/detail'
+          detail: this.$routePath.CPC_SERVICE_APPROVE_DETAIL
         }
       }
     },

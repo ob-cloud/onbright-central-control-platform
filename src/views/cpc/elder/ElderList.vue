@@ -238,7 +238,7 @@
           deleteBatch: '/sys/user/deleteBatch'
         },
         path: {
-          detail: '/elder/list/detail'
+          detail: this.$routePath.CPC_ELDER_LIST_DETAIL
         }
       }
     },

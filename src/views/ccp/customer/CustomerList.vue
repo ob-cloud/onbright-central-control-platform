@@ -249,7 +249,7 @@
           deleteBatch: '/sys/user/deleteBatch'
         },
         path: {
-          detail: '/customer/list/detail'
+          detail: this.$routePath.CCP_CUSTOMER_DETAIL_PATH
         }
       }
     },

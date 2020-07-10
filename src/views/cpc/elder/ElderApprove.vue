@@ -201,7 +201,7 @@
           deleteBatch: '/sys/user/deleteBatch'
         },
         path: {
-          detail: '/elder/approve/detail'
+          detail: this.$routePath.CPC_ELDER_APPROVE_DETAIL
         }
       }
     },

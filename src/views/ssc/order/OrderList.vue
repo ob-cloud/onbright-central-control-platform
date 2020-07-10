@@ -239,7 +239,7 @@
           list: '/Svc/getSvcOrderList',
         },
         path: {
-          detail: '/order/detail'
+          detail: this.$routePath.SSC_ORDER_LIST_DETAIL
         }
       }
     },
