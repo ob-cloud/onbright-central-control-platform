@@ -22,7 +22,7 @@
         </a-form-item> -->
 
         <a-form-item label="角色类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-select
+          <!-- <a-select
             style="width: 100%"
             placeholder="请选择角色类型"
             optionFilterProp="children"
@@ -32,7 +32,8 @@
             <a-select-option v-for="(role,roleindex) in roleTypeList" :key="roleindex.toString()" :value="role.value">
               {{ role.name }}
             </a-select-option>
-          </a-select>
+          </a-select> -->
+          <dict-select-tag v-decorator="['type', { initialValue: '', ...validatorRules.type}]" placeholder="请选择角色类型" :type="'select'" :triggerChange="true" dictCode="role_type" />
         </a-form-item>
 
         <!-- <a-form-item v-if="isCommunityType" label="关联附属角色" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -60,9 +61,11 @@
 <script>
   import pick from 'lodash.pick'
   import { addRole, editRole, queryAllRole, querySubRole } from '@/api/system'
+  import DictSelectTag from '@/components/Pro/DictSelectTag'
 
   export default {
     name: 'RoleModal',
+    components: { DictSelectTag },
     data () {
       return {
         title: '操作',
@@ -124,6 +127,7 @@
       edit (record) {
         this.form.resetFields()
         this.initialRoleList()
+        record.type = `${record.type}` // toString for dictTagSelect
         this.model = Object.assign({}, record);
         this.visible = true
 
