@@ -127,7 +127,7 @@
       edit (record) {
         this.form.resetFields()
         this.initialRoleList()
-        record.type = `${record.type}` // toString for dictTagSelect
+        record.type = `${record.type || ''}` // toString for dictTagSelect
         this.model = Object.assign({}, record);
         this.visible = true
 
