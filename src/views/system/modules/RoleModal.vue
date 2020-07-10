@@ -35,7 +35,7 @@
           </a-select>
         </a-form-item>
 
-        <a-form-item v-if="isCommunityType" label="关联附属角色" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <!-- <a-form-item v-if="isCommunityType" label="关联附属角色" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select
             mode="multiple"
             style="width: 100%"
@@ -47,7 +47,7 @@
               {{ role.roleName }}
             </a-select-option>
           </a-select>
-        </a-form-item>
+        </a-form-item> -->
 
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="描述">
           <a-textarea :rows="5" placeholder="..." v-decorator="[ 'description', validatorRules.description ]" />
