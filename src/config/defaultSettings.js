@@ -36,8 +36,9 @@ export default {
   ///// 此下面配置忽略
   // TODO Delete
   pageOptions: {
-    logo: 'http://placehold.it/50x50/333/fff/?text=pro',
-    title: '昂宝中控平台',
+    logo: ['http://placehold.it/50x50/333/fff/?text=ccp', 'http://placehold.it/50x50/333/fff/?text=cpc', 'http://placehold.it/50x50/333/fff/?text=ssc'],
+    title: ['昂宝中控平台', '社区养老中心', '供应商服务中心', '昂宝养老平台'],
+    background: ['ccp.jpg', 'cpc.jpg', 'ssc.jpg'],
     // description: 'On-Bright Admin Pro',
     hasFooter: false, // hasFooter 为 true 时， 下面脚注配置生效
     copyright: 'OnBright.tld',
