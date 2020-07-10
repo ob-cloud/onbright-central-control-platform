@@ -24,6 +24,7 @@ export default {
   colorWeak: false,
   multiTab: true,
   fixedMultiTab: true,
+  systemType: 0, // 系统类型，0 - 中台， 1 - 养老， 2 - 供应商
   production: process.env.NODE_ENV === 'production' && process.env.VUE_APP_PREVIEW !== 'true',
   // vue-ls options
   storageOptions: {

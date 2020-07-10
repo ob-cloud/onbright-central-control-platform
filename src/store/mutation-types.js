@@ -19,6 +19,8 @@ export const SYS_BUTTON_AUTH = 'SYS_BUTTON_AUTH'
 
 export const SYSTEM_SETTING = 'SYSTEM_SETTING'
 
+export const SYS_CLIENT_TYPE = 'SYS_CLIENT_TYPE'
+
 export const CONTENT_WIDTH_TYPE = {
   Fluid: 'Fluid',
   Fixed: 'Fixed'
