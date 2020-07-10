@@ -39,6 +39,7 @@ export default {
     logo: ['http://placehold.it/50x50/333/fff/?text=ccp', 'http://placehold.it/50x50/333/fff/?text=cpc', 'http://placehold.it/50x50/333/fff/?text=ssc'],
     title: ['昂宝中控平台', '社区养老中心', '供应商服务中心', '昂宝养老平台'],
     background: ['ccp.jpg', 'cpc.jpg', 'ssc.jpg'],
+    brand: ['ccp_logo.png', 'cpc_logo.png', 'ssc_logo.png'],
     // description: 'On-Bright Admin Pro',
     hasFooter: false, // hasFooter 为 true 时， 下面脚注配置生效
     copyright: 'OnBright.tld',
