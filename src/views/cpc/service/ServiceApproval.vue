@@ -262,12 +262,12 @@
       handleDevice () {
         // this.$refs.passwordmodal.show(username)
       },
-      handleActionDetail (record) {
-        this.$router.push({path: '/service/approval/detail', query: { id: record.id, disableSubmit: true, t: Date.now() }}, () => {
-          this.$store.dispatch('ToggleMultiTab', false)
-          this.$store.dispatch('ToggleIsActionBreadcrumb', false)
-        })
-      }
+      // handleActionDetail (record) {
+      //   this.$router.push({path: '/service/approval/detail', query: { id: record.id, disableSubmit: true, t: Date.now() }}, () => {
+      //     this.$store.dispatch('ToggleMultiTab', false)
+      //     this.$store.dispatch('ToggleIsActionBreadcrumb', false)
+      //   })
+      // }
     }
 
   }
