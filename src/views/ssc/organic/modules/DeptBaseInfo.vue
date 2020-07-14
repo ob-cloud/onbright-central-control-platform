@@ -11,9 +11,9 @@
         >
         </a-tree-select>
       </a-form-item>
-      <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="机构编码">
+      <!-- <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="机构编码">
         <a-input style="border:0px;" placeholder="" v-decorator="['orgCode', {}]" />
-      </a-form-item>
+      </a-form-item> -->
       <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="机构类型">
         <a-radio-group :disabled="true" v-decorator="['orgCategory',{}]" placeholder="请选择机构类型">
           <a-radio value="1">

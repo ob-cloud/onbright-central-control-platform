@@ -41,11 +41,11 @@
             </a-radio-group>
           </template>
         </a-form-item>
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="电话">
+        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="联系电话">
           <a-input placeholder="请输入电话" v-decorator="['mobile',validatorRules.mobile]" />
         </a-form-item>
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="传真">
-          <a-input placeholder="请输入传真" v-decorator="['fax', {}]" />
+        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="电子邮箱">
+          <a-input placeholder="请输入传真" v-decorator="['email', {}]" />
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="地址">
           <a-input placeholder="请输入地址" v-decorator="['address', {}]" />
@@ -107,69 +107,65 @@
     created () {
     },
     methods: {
-      loadTreeData(){
-        var that = this;
-        queryIdTree().then((res)=>{
-          if(res.success){
-            that.departTree = [];
+      loadTreeData() {
+        queryIdTree().then((res) => {
+          if (this.$isAjaxSuccess(res.code)) {
+            this.departTree = []
+            res.result = [res.result]
             for (let i = 0; i < res.result.length; i++) {
-              let temp = res.result[i];
-              that.departTree.push(temp);
+              let temp = res.result[i]
+              this.departTree.push(temp)
             }
           }
-
         })
       },
-      add (depart) {
-        if(depart){
-          this.seen = false;
-          this.dictDisabled = false;
-        }else{
-          this.seen = true;
-          this.dictDisabled = true;
-        }
-        this.edit(depart);
+      add(depart) {
+        this.seen = !depart
+        this.dictDisabled = !depart
+        // if (depart) {
+        //   this.seen = false;
+        //   this.dictDisabled = false;
+        // } else {
+        //   this.seen = true;
+        //   this.dictDisabled = true;
+        // }
+        this.edit(depart)
       },
       edit (record) {
-          this.form.resetFields();
-          this.model = Object.assign({}, {});
-          this.visible = true;
-          this.loadTreeData();
-          this.model.parentId = record!=null?record.toString():null;
-          if(this.seen){
-            this.model.orgCategory = '1';
-          }else{
-            this.model.orgCategory = '2';
-          }
+          this.form.resetFields()
+          this.model = Object.assign({}, {})
+          this.visible = true
+          this.loadTreeData()
+          this.model.parentId = record != null ? record.toString() : null
+          this.model.orgCategory = this.seen ? '1' : '2'
           this.$nextTick(() => {
             this.form.setFieldsValue(pick(this.model,'orgCategory','departName','departNameEn','departNameAbbr','depart_order','description','orgType','orgCode','mobile','fax','address','memo','status','delFlag'))
-          });
+          })
       },
       close () {
-        this.$emit('close');
-        this.disableSubmit = false;
-        this.visible = false;
+        this.$emit('close')
+        this.disableSubmit = false
+        this.visible = false
       },
       handleOk () {
-        const that = this;
+        const that = this
         // 触发表单验证
         this.form.validateFields((err, values) => {
           if (!err) {
             that.confirmLoading = true;
             let formData = Object.assign(this.model, values);
             //时间格式化
-            console.log(formData)
             addDepart(formData).then((res)=>{
-              if(res.success){
-                that.$message.success(res.message);
-                that.loadTreeData();
-                that.$emit('ok');
+              if(this.$isAjaxSuccess(res.code)){
+                that.$message.success(res.message)
+                that.loadTreeData()
+                that.$emit('ok')
               }else{
-                that.$message.warning(res.message);
+                that.$message.warning(res.message)
               }
             }).finally(() => {
-              that.confirmLoading = false;
-              that.close();
+              that.confirmLoading = false
+              that.close()
             })
 
           }

@@ -14,7 +14,7 @@
             <a-button type="primary" icon="import">导入</a-button>
           </a-upload> -->
           <a-button title="删除多条数据" @click="batchDel" type="default">批量删除</a-button>
-          <!--<a-button @click="refresh" type="default" icon="reload" :loading="loading">刷新</a-button>-->
+          <a-button @click="refresh" type="default" icon="reload" :loading="loading">刷新</a-button>
         </a-row>
         <div style="background: #fff;padding-left:16px;height: 100%; margin-top: 5px">
           <a-alert type="info" :showIcon="true">
@@ -79,9 +79,9 @@
                 >
                 </a-tree-select>
               </a-form-item>
-              <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="机构编码">
+              <!-- <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="机构编码">
                 <a-input disabled placeholder="请输入机构编码" v-decorator="['orgCode', validatorRules.orgCode ]" />
-              </a-form-item>
+              </a-form-item> -->
               <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="机构类型">
                 <template v-if="orgCategoryDisabled">
                   <a-radio-group v-decorator="['orgCategory',validatorRules.orgCategory]" placeholder="请选择机构类型">
@@ -239,12 +239,12 @@
           exportXlsUrl: "sys/sysDepart/exportXls",
           importExcelUrl: "sys/sysDepart/importExcel",
         },
-        orgCategoryDisabled:false,
+        orgCategoryDisabled: false,
       }
     },
     computed: {
       importExcelUrl: function () {
-        return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
+        return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`
       }
     },
     methods: {
@@ -252,20 +252,20 @@
         this.refresh();
       },
       loadTree() {
-        var that = this
-        that.treeData = []
-        that.departTree = []
+        this.treeData = []
+        this.departTree = []
         queryDepartTreeList().then((res) => {
           if (this.$isAjaxSuccess(res.code)) {
             if (!res.result) return
+            res.result = [res.result]
             //部门全选后，再添加部门，选中数量增多
             this.allTreeKeys = [];
             for (let i = 0; i < res.result.length; i++) {
               let temp = res.result[i]
-              that.treeData.push(temp)
-              that.departTree.push(temp)
-              that.setThisExpandedKeys(temp)
-              that.getAllKeys(temp);
+              this.treeData.push(temp)
+              this.departTree.push(temp)
+              this.setThisExpandedKeys(temp)
+              this.getAllKeys(temp)
               // console.log(temp.id)
             }
             this.loading = false
@@ -328,8 +328,8 @@
             title: '确认删除',
             content: '确定要删除所选中的 ' + this.checkedKeys.length + ' 条数据，以及子节点数据吗?',
             onOk: function () {
-              deleteAction(that.url.deleteBatch, {ids: ids}).then((res) => {
-                if (res.success) {
+              deleteAction(that.url.deleteBatch, {depIds: ids}).then((res) => {
+                if (this.$isAjaxSuccess(res.code)) {
                   that.$message.success(res.message)
                   that.loadTree()
                   that.onClearSelected()
@@ -483,8 +483,8 @@
           title: '确认删除',
           content: '确定要删除此部门以及子节点数据吗?',
           onOk: function () {
-            delDepart({id: that.rightClickSelectedKey}).then((resp) => {
-              if (resp.success) {
+            delDepart({depIds: that.rightClickSelectedKey}).then((res) => {
+              if (that.$isAjaxSuccess(res.code)) {
                 //删除成功后，去除已选中中的数据
                 that.checkedKeys.splice(that.checkedKeys.findIndex(key => key === that.rightClickSelectedKey), 1);
                 that.$message.success('删除成功!')

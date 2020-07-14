@@ -41,9 +41,16 @@
           <a-input placeholder="请输入用户姓名" v-decorator.trim="[ 'realname', validatorRules.realname]" />
         </a-form-item>
 
-        <a-form-item label="工号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input placeholder="请输入工号" v-decorator.trim="[ 'workNo', validatorRules.workNo]" />
+        <a-form-item label="在职状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-radio-group v-model="identity" @change="identityChange">
+            <a-radio value="1">在职</a-radio>
+            <a-radio value="2">离职</a-radio>
+          </a-radio-group>
         </a-form-item>
+
+        <!-- <a-form-item label="工号" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input placeholder="请输入工号" v-decorator.trim="[ 'workNo', validatorRules.workNo]" />
+        </a-form-item> -->
 
         <!-- <a-form-item label="职务" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <j-select-position placeholder="请选择职务" :multiple="false" v-decorator="['post', {}]"/>
@@ -70,13 +77,12 @@
             <a-button slot="enterButton" icon="search">选择</a-button>
           </a-input-search>
         </a-form-item>
-        <!-- update--begin--autor:wangshuai-----date:20200108------for：新增身份和负责部门-------->
-        <a-form-item label="身份" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <!-- <a-form-item label="身份" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-radio-group v-model="identity" @change="identityChange">
             <a-radio value="1">普通用户</a-radio>
             <a-radio value="2">上级</a-radio>
           </a-radio-group>
-        </a-form-item>
+        </a-form-item> -->
         <a-form-item label="负责部门" :labelCol="labelCol" :wrapperCol="wrapperCol" v-if="departIdShow==true">
           <a-select
             mode="multiple"
@@ -91,7 +97,6 @@
             </a-select-option>
           </a-select>
         </a-form-item>
-        <!-- update--end--autor:wangshuai-----date:20200108------for：新增身份和负责部门------ -->
         <a-form-item label="头像" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <image-upload class="avatar-uploader" text="上传" v-model="fileList"></image-upload>
         </a-form-item>
@@ -124,9 +129,9 @@
           <a-input placeholder="请输入座机" v-decorator="[ 'telephone', validatorRules.telephone]" />
         </a-form-item>
 
-        <a-form-item label="工作流引擎" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <!-- <a-form-item label="工作流引擎" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <j-dict-select-tag v-decorator="['activitiSync', {}]" placeholder="请选择是否同步工作流引擎" :type="'radio'" :triggerChange="true" dictCode="activiti_sync" />
-        </a-form-item>
+        </a-form-item> -->
 
       </a-form>
     </a-spin>

@@ -43,16 +43,16 @@
 
         <a-form-item label="角色分配" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select
-            mode="multiple"
             style="width: 100%"
             placeholder="请选择用户角色"
             optionFilterProp="children"
-            v-model="selectedRole"
+            v-decorator="[ 'role', {}]"
           >
             <a-select-option v-for="(role,roleindex) in roleList" :key="roleindex.toString()" :value="role.id">
               {{ role.roleName }}
             </a-select-option>
           </a-select>
+          <!-- <dict-select-tag v-decorator="['selectedRole', { initialValue: '', ...validatorRules.type}]" placeholder="请选择用户角色" :type="'select'" :triggerChange="true" dictCode="role_type" /> -->
         </a-form-item>
 
         <a-form-item label="联系人" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -181,7 +181,7 @@
         this.visible = true
         this.model = Object.assign({}, record)
         if (this.entityId) {
-          this.loadUserRoles(this.entityId)
+          // this.loadUserRoles(this.entityId)
         }
         this.$nextTick(() => {
           this.form.setFieldsValue(this.model)
@@ -260,7 +260,7 @@
       initialRoleList () {
         queryAllRole({ column: '', order: true }).then((res) => {
           if (this.$isAjaxSuccess(res.code)) {
-            this.roleList = res.result.records
+            this.roleList = res.result
           } else {
             console.log(res.message)
           }

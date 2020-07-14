@@ -15,10 +15,10 @@
             :checkStrictly="checkStrictly"
             style="height:500px;overflow: auto;"
           >
-            <span slot="hasDatarule" slot-scope="{slotTitle,ruleFlag}">
+            <!-- <span slot="hasDatarule" slot-scope="{slotTitle,ruleFlag}">
               {{ slotTitle }}
               <a-icon v-if="ruleFlag" type="align-left" style="margin-left:5px;color: red;"></a-icon>
-            </span>
+            </span> -->
           </a-tree>
         </a-form-item>
       </a-form>
@@ -51,7 +51,8 @@
 </template>
 
 <script>
-  import {queryTreeListForRole, queryDepartPermission, saveDepartPermission} from '@/api/ssc'
+  // import {queryTreeListForRole, queryDepartPermission, saveDepartPermission} from '@/api/ssc'
+  import { queryPermissionTreeList, queryRolePermission, saveRolePermission } from '@/api/system'
   // import DepartDataruleModal from './DepartDataruleModal'
 
   export default {
@@ -128,13 +129,13 @@
         let checkedKeys = [...that.checkedKeys, ...that.halfCheckedKeys]
         const permissionIds = checkedKeys.join(",")
         let params =  {
-          departId:that.departId,
+          roleId: that.departId,
           permissionIds,
           lastpermissionIds:that.defaultCheckedKeys.join(","),
         };
         that.loading = true;
-        saveDepartPermission(params).then((res)=>{
-          if(res.success){
+        saveRolePermission(params).then((res)=>{
+          if(this.$isAjaxSuccess(res.code)){
             that.$message.success(res.message);
             that.loading = false;
             that.loadData();
@@ -157,11 +158,13 @@
         this.form.resetFields()
       },
       loadData(){
-        queryTreeListForRole().then((res) => {
+        queryPermissionTreeList().then((res) => {
+          if (!this.$isAjaxSuccess(res.code)) return
           this.treeData = res.result.treeList
           this.allTreeKeys = res.result.ids
           const keyLeafPairs = this.convertTreeListToKeyLeafPairs(this.treeData)
-          queryDepartPermission({departId:this.departId}).then((res)=>{
+          queryRolePermission({roleId: this.departId}).then((res)=>{
+            if (!this.$isAjaxSuccess(res.code)) return
             // 过滤出 leaf node 即可，即选中的
             // Tree组件中checkStrictly默认为false的时候，选中子节点，父节点会自动设置选中或半选中
             // 保存 checkedKeys 以及 halfCheckedKeys 以便于未做任何操作时提交表单数据

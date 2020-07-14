@@ -210,7 +210,7 @@ export default {
           obj.then((res) => {
             if (that.$isAjaxSuccess(res.code)) {
               that.$message.success(res.message)
-              that.$router.push('/customer/list')
+              that.$router.push(this.$routePath.CCP_CUSTOMER_PATH)
             } else {
               that.$message.warning(res.message)
             }

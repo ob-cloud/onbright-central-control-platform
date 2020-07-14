@@ -28,15 +28,15 @@
 </template>
 
 <script>
-  import { httpAction } from '@/utils/ajax'
   import pick from 'lodash.pick'
-  import {duplicateCheck } from '@/api/system'
+  import { duplicateCheck } from '@/api/system'
+  import { addDepartRole, editDepartRole } from '@/api/ssc'
 
   export default {
-    name: "SysDepartRoleModal",
+    name: 'SysDepartRoleModal',
     data () {
       return {
-        title:"操作",
+        title: '操作',
         visible: false,
         model: {},
         labelCol: {
@@ -47,7 +47,6 @@
           xs: { span: 24 },
           sm: { span: 16 },
         },
-
         confirmLoading: false,
         form: this.$form.createForm(this),
         validatorRules:{
@@ -61,15 +60,16 @@
               { required: true, message: '请输入部门角色编码!'},
               { min: 0, max: 64, message: '长度不超过 64 个字符', trigger: 'blur' },
               { validator: this.validateRoleCode}
-            ]},
+            ]
+          },
           description:{
             rules: [
               { min: 0, max: 126, message: '长度不超过 126 个字符', trigger: 'blur' }
             ]}
         },
         url: {
-          add: "/sys/sysDepartRole/add",
-          edit: "/sys/sysDepartRole/edit",
+          add: '/sys/sysDepartRole/add',
+          edit: '/sys/sysDepartRole/edit',
         },
       }
     },
@@ -77,48 +77,40 @@
     },
     methods: {
       add (departId) {
-        this.edit({},departId);
+        this.edit({}, departId)
       },
-      edit (record,departId) {
-        this.departId = departId;
-        this.form.resetFields();
-        this.model = Object.assign({}, record);
-        this.visible = true;
+      edit (record, departId) {
+        this.departId = departId
+        this.form.resetFields()
+        this.model = Object.assign({}, record)
+        this.visible = true
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'roleName','roleCode','description'))
-        });
+          this.form.setFieldsValue(pick(this.model, 'roleName', 'roleCode', 'description'))
+        })
       },
       close () {
-        this.$emit('close');
-        this.visible = false;
+        this.$emit('close')
+        this.visible = false
       },
       handleOk () {
-        const that = this;
+        const that = this
         // 触发表单验证
         this.form.validateFields((err, values) => {
           if (!err) {
-            that.confirmLoading = true;
-            let httpurl = '';
-            let method = '';
-            if(!this.model.id){
-              httpurl+=this.url.add;
-              method = 'post';
-            }else{
-              httpurl+=this.url.edit;
-               method = 'put';
-            }
-            let formData = Object.assign(this.model, values);
-            formData.departId = this.departId;
-            httpAction(httpurl,formData,method).then((res)=>{
-              if(res.success){
-                that.$message.success(res.message);
-                that.$emit('ok');
-              }else{
-                that.$message.warning(res.message);
+            this.confirmLoading = true
+            let formData = Object.assign(this.model, values)
+            formData.departId = this.departId
+            const obj = this.model.id ? editDepartRole(formData) : addDepartRole(formData)
+            obj.then((res) => {
+              if (this.$isAjaxSuccess(res.code)) {
+                that.$message.success(res.message)
+                that.$emit('ok')
+              } else {
+                that.$message.warning(res.message)
               }
             }).finally(() => {
-              that.confirmLoading = false;
-              that.close();
+              that.confirmLoading = false
+              that.close()
             })
           }
         })

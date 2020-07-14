@@ -3,14 +3,15 @@
  * @Author: eamiear
  * @Date: 2020-07-10 10:44:36
  * @Last Modified by: eamiear
- * @Last Modified time: 2020-07-10 10:50:59
+ * @Last Modified time: 2020-07-13 18:25:38
  */
 
 
 // 中台
 const CCP_PREFIX = '/ccp'
 
-export const CCP_CUSTOMER_DETAIL_PATH =  CCP_PREFIX + '/customer/list/detail'
+export const CCP_CUSTOMER_PATH = CCP_PREFIX + '/customer/list'
+export const CCP_CUSTOMER_DETAIL_PATH = CCP_PREFIX + '/customer/list/detail'
 
 // 养老
 

@@ -13,7 +13,8 @@ const _PREFIX = config.mockPrefix
 const queryDepartTreeList = (params) => getAction(_PREFIX + '/depart/getDepartList', params)
 
 // 获取下拉树
-const queryIdTree = (params) => getAction(_PREFIX + '/depart/queryIdTree', params)
+// const queryIdTree = (params) => getAction(_PREFIX + '/depart/queryIdTree', params)
+const queryIdTree = (params) => getAction(_PREFIX + '/depart/getDepartList', params)
 
 // 关键字查询部门
 const searchByKeywords = (id) => getAction(_PREFIX + '/depart/searchBy', {id})
@@ -29,6 +30,9 @@ const delDepart = (params) => deleteAction(_PREFIX + '/depart/delDepart', params
 
 // 新增部门角色
 const addDepartRole = (params) => postAction(_PREFIX + '/depart/addDepartRole', params)
+
+// 编辑部门角色
+const editDepartRole = (params) => putAction(_PREFIX + '/depart/editDepartRole', params)
 
 // 权限树
 const queryTreeListForRole = (params) => getAction(_PREFIX + '/depart/role/queryTreeList', params)
@@ -55,7 +59,7 @@ const queryDeptRolePermission = (params) => getAction(_PREFIX + '/depart/role/qu
 const queryDepartUserRole = (params) => getAction(_PREFIX + '/depart/role/queryTreeList', params)
 
 // 查询部门角色树列表
-const queryTreeListForDeptRole = (params) => getAction(_PREFIX + '/depart/role/queryTreeList', params)
+const queryTreeListForDeptRole = (params) => getAction(_PREFIX + '/depart/getDepartRoleList', params)
 
 // 保存部门角色权限
 const saveDeptRolePermission = (params) => postAction(_PREFIX + '/depart/role/queryTreeList', params)
@@ -71,6 +75,7 @@ export {
   editDepart,
   delDepart,
   addDepartRole,
+  editDepartRole,
 
   queryTreeListForRole,
   queryDepartPermission,

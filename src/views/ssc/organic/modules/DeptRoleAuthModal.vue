@@ -57,7 +57,8 @@
 
 </template>
 <script>
-  import {queryTreeListForDeptRole,queryDeptRolePermission,saveDeptRolePermission} from '@/api/ssc'
+  // import {queryTreeListForDeptRole,queryDeptRolePermission,saveDeptRolePermission} from '@/api/ssc'
+  import { queryPermissionTreeList, queryRolePermission, saveRolePermission } from '@/api/system'
 
   export default {
     name: "DeptRoleAuthModal",
@@ -146,7 +147,7 @@
         };
         that.loading = true;
         console.log("请求参数：",params);
-        saveDeptRolePermission(params).then((res)=>{
+        saveRolePermission(params).then((res)=>{
           if(res.success){
             that.$message.success(res.message);
             that.loading = false;
@@ -173,10 +174,10 @@
         return keyLeafPair;
       },
       loadData(){
-        queryTreeListForDeptRole({departId:this.departId}).then((res) => {
+        queryPermissionTreeList({departId:this.departId}).then((res) => {
           this.treeData = res.result.treeList
           this.allTreeKeys = res.result.ids
-          queryDeptRolePermission({roleId:this.roleId}).then((res)=>{
+          queryRolePermission({roleId:this.roleId}).then((res)=>{
             this.checkedKeys = [...res.result];
             this.defaultCheckedKeys = [...res.result];
             this.expandedKeysss = this.allTreeKeys;

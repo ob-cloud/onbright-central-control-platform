@@ -119,7 +119,7 @@
           width: 170
         }],
         url: {
-          list: "/sys/sysDepartRole/list",
+          list: "/depart/getDepartRoleList",
           delete: "/sys/sysDepartRole/delete",
           deleteBatch: "/sys/sysDepartRole/deleteBatch",
         }
